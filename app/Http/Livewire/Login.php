@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\LoginController;
 use Livewire\Component;
 
 class Login extends Component
@@ -33,6 +34,7 @@ class Login extends Component
      * @var string
      */
     public $error;
+    public $messagess;
 
     protected $rules = [
         'email' => 'required',
@@ -46,10 +48,9 @@ class Login extends Component
 
     public function validateForm()
     {
-
         $this->validate();
 
-        $this->user = new UserController();
+        $this->user = new LoginController();
 
         $this->user->authenticate(['email' => $this->email, 'password' => $this->password]);
 
@@ -68,6 +69,6 @@ class Login extends Component
     public function render()
     {
 
-        return view('livewire.login',['error' => $this->error]);
+        return view('livewire.login',['error' => $this->error, 'messages' => $this->messagess]);
     }
 }
