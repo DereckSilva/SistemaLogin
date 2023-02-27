@@ -34,6 +34,12 @@ class Login extends Component
      * @var string
      */
     public $error;
+
+    /**
+     * Message success
+     *
+     * @var string
+     */
     public $messagess;
 
     protected $rules = [
