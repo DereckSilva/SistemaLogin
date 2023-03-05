@@ -21,8 +21,6 @@ class LoginController extends Controller
 
         Request()->session()->put('email', $user['email']);
 
-        $message = 'sucesso';
-
-        return redirect()->route('login')->with('sucesso', $message);
+        return redirect()->route('login');
     }
 }

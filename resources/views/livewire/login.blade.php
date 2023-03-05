@@ -20,10 +20,6 @@
             <span class="text-red-300">{{$message}}</span>
             @enderror
 
-            @if(!empty($messages))
-                <x-success :messages="$messagess"/>
-            @endif
-
             @if(!empty($error))
                 <x-alert :error="$error"/>
             @endif
