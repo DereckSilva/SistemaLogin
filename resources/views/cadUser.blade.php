@@ -9,5 +9,5 @@
 @endsection
 
 @section('conteudo')
-    @livewire('cad-user')
+    @livewire('cad-user', ['message' => session('message'), 'error' => session('error')])
 @endsection
