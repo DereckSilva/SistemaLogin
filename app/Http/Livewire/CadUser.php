@@ -33,15 +33,14 @@ class CadUser extends Component
         'confirmPassword.required' => 'Informe a senha de confirmação'
     ];
 
-    public function sendEmail() {
+    public function cadUser() {
 
         $this->validate();
 
         $cadUserRepository = app('App\Repositories\CadUserRepository');
 
-        $cadUserRepository->insertNewUser($this->name, $this->email, $this->password);
+        $user = $cadUserRepository->insertNewUser($this->name, $this->email, $this->password);
 
-        SendMail::dispatch();
     }
 
     /*

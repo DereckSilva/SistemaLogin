@@ -9,16 +9,18 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SendMail extends Mailable
+class SendMails extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $name;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($name)
     {
-        //
+        $this->name = $name;
     }
 
     /**
@@ -38,7 +40,8 @@ class SendMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.email.email',
+            view: 'email.email',
+            with: ['name' => $this->name ]
         );
     }
 

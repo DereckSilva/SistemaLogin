@@ -2,7 +2,7 @@
 
     <img src="{{ Vite::asset('resources/images/Privacy policy-rafiki.svg') }}"
          alt="login"class="w-40 container mx-auto self-center">
-    <form wire:submit.prevent='sendEmail'>
+    <form wire:submit.prevent='cadUser'>
         <div class="p-8 space-y-2 w-5/12 bg-white container mx-auto rounded-3xl shadow-lg" >
 
             <div class="flex flex-col gap-2">
@@ -41,6 +41,7 @@
 
             @if(!empty($message))
                 <x-success :messages="$message"/>
+
             @endif
             @if(!empty($error))
                 <x-alert :error="$error"/>
