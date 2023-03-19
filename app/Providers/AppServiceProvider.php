@@ -12,8 +12,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            'App\Interface\CadUserRepositoryInterface',
-            'App\Repositories\CadUserRepository'
+            'App\Interface\UserRepositoryInterface',
+            'App\Repositories\UserRepository'
         );
     }
 

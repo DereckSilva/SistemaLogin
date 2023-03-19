@@ -36,6 +36,6 @@ class SendMail implements ShouldQueue
 
     public function failed(Throwable $exception): void
     {
-
+        // codificar depois
     }
 }

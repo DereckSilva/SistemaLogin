@@ -1,6 +1,8 @@
 <?php
 
 use App\Jobs\SendMail;
+use App\Models\Job;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -22,11 +24,3 @@ Route::get('/login', function() {
 Route::get('cadUser', function () {
     return view('cadUser', ['titulo' => 'Cadastro']);
 })->name('cadUser');
-
-Route::get('te', function () {
-    $users = \App\Models\User::get();
-
-    foreach ($users as $user) {
-        SendMail::dispatch($user->name, $user->email)->onQueue('cadUser');
-    }
-});

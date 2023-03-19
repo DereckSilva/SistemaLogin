@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Interface\CadUserRepositoryInterface;
+use App\Interface\UserRepositoryInterface;
 use App\Models\User;
-use  App\Jobs\SendMail;
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
-class CadUserRepository implements CadUserRepositoryInterface {
+class UserRepository implements UserRepositoryInterface {
 
     public function insertNewUser($name, $email, $password): Redirector
     {
@@ -48,5 +48,12 @@ class CadUserRepository implements CadUserRepositoryInterface {
         $email = User::where('email', '=', $email)->first();
 
         return $email;
+    }
+
+    public function findAll(): Collection
+    {
+        $users = User::all();
+
+        return $users;
     }
 }

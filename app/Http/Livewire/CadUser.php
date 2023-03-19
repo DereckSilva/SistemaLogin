@@ -40,9 +40,9 @@ class CadUser extends Component
 
         $this->validate();
 
-        $cadUserRepository = app('App\Repositories\CadUserRepository');
+        $userRepository = app('App\Repositories\UserRepository');
 
-        $user = $cadUserRepository->insertNewUser($this->name, $this->email, $this->password);
+        $user = $userRepository->insertNewUser($this->name, $this->email, $this->password);
 
         if (empty($user->error)) {
             SendMail::dispatch($this->name, $this->email)->onQueue('cadUser');
