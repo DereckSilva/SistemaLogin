@@ -20,17 +20,20 @@ class CadUser extends Component
         return [
             'name'            => 'required|min:10',
             'email'           => 'required|email',
-            'password'        => 'required',
+            'password'        => 'required|min:8',
             'confirmPassword' => ['required', new ConfirmPassword($this->password)]
         ];
     }
 
     protected $messages = [
-        'name'                     => 'Informe o nome completo do usuário',
+        'name.required'            => 'Informe o nome completo do usuário.',
+        'name.min'                 => 'É necessário no mínimo 10 caracteres.',
         'email.required'           => 'Informe o e-mail de cadastro.',
         'email.email'              => 'O e-mail informado está no formato incorreto.',
-        'password.required'        => 'Informe a senha',
-        'confirmPassword.required' => 'Informe a senha de confirmação'
+        'password.required'        => 'Informe a senha.',
+        'password.min'             => 'É necessário no mínimo 8 caracteres.',
+        'confirmPassword.min'      => 'É necessário no mínimo 8 caracteres.',
+        'confirmPassword.required' => 'Informe a senha de confirmação.'
     ];
 
     public function cadUser() {
@@ -40,6 +43,10 @@ class CadUser extends Component
         $cadUserRepository = app('App\Repositories\CadUserRepository');
 
         $user = $cadUserRepository->insertNewUser($this->name, $this->email, $this->password);
+
+        if (empty($user->error)) {
+            SendMail::dispatch($this->name, $this->email)->onQueue('cadUser');
+        }
 
     }
 
@@ -54,7 +61,7 @@ class CadUser extends Component
     {
         return view('livewire.cad-user', [
             'message' => $this->message,
-            'error'   => $this->error
+            'error'   => $this->error,
         ]);
     }
 }

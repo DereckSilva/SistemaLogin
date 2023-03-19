@@ -24,6 +24,10 @@ class ConfirmPassword implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        if (strlen($this->password) < 8) {
+            $fail('É necessário no mínimo 8 caracteres.');
+        }
+
         if ($this->password !== $value) {
             $fail('Senhas diferentes. Por favor, informe senhas iguais.');
         }

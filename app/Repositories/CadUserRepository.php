@@ -30,8 +30,6 @@ class CadUserRepository implements CadUserRepositoryInterface {
 
             $success = 'Usuário cadastrado com sucesso';
 
-            SendMail::dispatch($name, $email);
-
             return redirect()->route('cadUser')->with([ 'message' => $success ]);
 
         } catch (QueryException $error) {

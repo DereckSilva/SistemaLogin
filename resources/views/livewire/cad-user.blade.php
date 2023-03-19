@@ -3,6 +3,9 @@
     <img src="{{ Vite::asset('resources/images/Privacy policy-rafiki.svg') }}"
          alt="login"class="w-40 container mx-auto self-center">
     <form wire:submit.prevent='cadUser'>
+        @if (!empty($teste))
+            {{dd($teste)}}
+        @endif
         <div class="p-8 space-y-2 w-5/12 bg-white container mx-auto rounded-3xl shadow-lg" >
 
             <div class="flex flex-col gap-2">
