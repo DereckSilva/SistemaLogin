@@ -8,4 +8,5 @@
     <li>Autenticação de e-mail e senha</li>
     <li>Recuperação de senha</li>
     <li>Automação para envio de e-mail de boas vindas</li>
+    <li>Esquema de notificações para o usuário</li>
 </ul>
