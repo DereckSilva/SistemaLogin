@@ -4,37 +4,26 @@ namespace App\Http\Livewire;
 
 use App\Jobs\SendMail;
 use App\Rules\ConfirmPassword;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 
 class CadUser extends Component
 {
 
-    public $message;
-    public $error;
-    public $name;
-    public $email;
-    public $password;
-    public $confirmPassword;
+    public $message, $error, $name, $email, $password, $confirmed;
 
     public function rules() {
         return [
             'name'            => 'required|min:10',
             'email'           => 'required|email',
-            'password'        => 'required|min:8',
-            'confirmPassword' => ['required', new ConfirmPassword($this->password)]
+            'password'        => ['required', Password::min(8)->mixedCase()->numbers()],
+            'confirmed'       => ['required', Password::min(8)->mixedCase()->numbers(), function ($attribute, $value, $fail) {
+                if ($value !== $this->password) {
+                    $fail('As senhas são diferentes.');
+                }
+            }]
         ];
     }
-
-    protected $messages = [
-        'name.required'            => 'Informe o nome completo do usuário.',
-        'name.min'                 => 'É necessário no mínimo 10 caracteres.',
-        'email.required'           => 'Informe o e-mail de cadastro.',
-        'email.email'              => 'O e-mail informado está no formato incorreto.',
-        'password.required'        => 'Informe a senha.',
-        'password.min'             => 'É necessário no mínimo 8 caracteres.',
-        'confirmPassword.min'      => 'É necessário no mínimo 8 caracteres.',
-        'confirmPassword.required' => 'Informe a senha de confirmação.'
-    ];
 
     public function cadUser() {
 

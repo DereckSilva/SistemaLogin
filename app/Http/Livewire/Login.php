@@ -44,12 +44,7 @@ class Login extends Component
 
     protected $rules = [
         'email' => 'required',
-        'password' => 'required',
-    ];
-
-    protected $messages = [
-        'email.required' => 'e',
-        'password.required' => 'd'
+        'password' => 'required|min:8',
     ];
 
     public function validateForm()
@@ -75,6 +70,9 @@ class Login extends Component
     public function render()
     {
 
-        return view('livewire.login',['error' => $this->error, 'messages' => $this->messagess]);
+        return view('livewire.login',[
+            'error' => $this->error,
+            'messages' => $this->messagess
+        ]);
     }
 }

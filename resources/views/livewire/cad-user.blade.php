@@ -35,9 +35,9 @@
 
             <div class="flex flex-col gap-2">
                 <label for="confirma-senha">Confirma Senha</label>
-                <input id="confirma-senha" class="focus:outline-none border-slate-900 border-solid border-2 rounded-xl p-2 w-4/3" wire:model='confirmPassword' type="password">
+                <input id="confirma-senha" class="focus:outline-none border-slate-900 border-solid border-2 rounded-xl p-2 w-4/3" wire:model='confirmed' type="password">
 
-                @error('confirmPassword')
+                @error('confirmed ')
                 <span class="text-red-300 text-sm"> {{$message}}</span>
                 @enderror
             </div>
