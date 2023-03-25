@@ -57,8 +57,9 @@ class Login extends Component
 
     }
 
-    public function esqueceuSenha(){
-        return redirect()->route('esqueceu_senha');
+    public function forgetPassword()
+    {
+        return redirect()->route('forgetPassword');
     }
 
     public function cadUser(){

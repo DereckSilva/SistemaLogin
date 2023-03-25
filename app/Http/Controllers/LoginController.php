@@ -14,7 +14,7 @@ class LoginController extends Controller
 
         if (!Auth::attempt(['email' => $user['email'], 'password' => $user['password']])) {
 
-            $error = 'Email or password incorrect';
+            $error = 'Email or password incorreto';
 
             return redirect()->route('login')->with('error', $error);
         }

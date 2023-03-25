@@ -27,7 +27,7 @@
 
 
                 <div>
-                    <a href="" class="text-xs text-gray-400 underline">Esqueceu sua senha?</a>
+                    <a class="text-xs text-gray-400 underline" wire:click='forgetPassword'>Esqueceu sua senha?</a>
                 </div>
                 <div class="flex gap-2">
 
