@@ -16,13 +16,19 @@ class SendMail implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $name;
+    public $email;
+    public $forgetPassword;
+    public $cod;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($name)
+    public function __construct($name, $email, $forgetPassword = false, $cod = null)
     {
-        $this->name = $name;
+        $this->name           = $name;
+        $this->email          = $email;
+        $this->forgetPassword = $forgetPassword;
+        $this->cod            = $cod;
     }
 
     /**
@@ -30,7 +36,7 @@ class SendMail implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to('teste@gmail.com')->send(new SendMails($this->name));
+        Mail::to($this->email)->send(new SendMails($this->name, $this->forgetPassword, $this->cod));
     }
 
     public function failed(Throwable $exception): void

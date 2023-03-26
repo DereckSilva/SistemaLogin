@@ -14,13 +14,17 @@ class SendMails extends Mailable
     use Queueable, SerializesModels;
 
     public $name;
+    public $forgetPassword;
+    public $cod;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($name)
+    public function __construct($name, $forgetPassword = false, $cod = null)
     {
-        $this->name = $name;
+        $this->name           = $name;
+        $this->forgetPassword = $forgetPassword;
+        $this->cod            = $cod;
     }
 
     /**
@@ -30,7 +34,7 @@ class SendMails extends Mailable
     {
         return new Envelope(
             from: new Address(config('mail.from.address')),
-            subject: 'Bem Vindo',
+            subject: $this->forgetPassword ? 'Recuperação de Senha' : 'Bem Vindo',
         );
     }
 
@@ -40,8 +44,8 @@ class SendMails extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.email',
-            with: ['name' => $this->name ]
+            view: $this->forgetPassword ? 'email.forget' : 'email.email',
+            with: ['name' => $this->name, 'cod' => $this->cod ]
         );
     }
 

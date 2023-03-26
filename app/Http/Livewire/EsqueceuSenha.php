@@ -11,11 +11,12 @@ class EsqueceuSenha extends Component
     public $email;
     public function sendCod() {
         $userRepository = app('App\Repositories\UserRepository');
-
-        $user = $userRepository->findEmail($this->email);
+        $user           = $userRepository->findEmail($this->email);
 
         if (!empty($user->email)) {
-            SendMail::dispatchSync($user->name, $this->email);
+
+            $this->cod = random_int(100000,999999);
+            SendMail::dispatchSync($user->name, $this->email, true, $this->cod);
         }
     }
 
