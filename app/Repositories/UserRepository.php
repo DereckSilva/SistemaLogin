@@ -2,14 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Interface\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 
-class UserRepository implements UserRepositoryInterface {
+class UserRepository extends Base {
 
     public function insertNewUser($name, $email, $password): Redirector
     {

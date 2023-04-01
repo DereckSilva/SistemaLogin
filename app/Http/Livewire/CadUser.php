@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Jobs\SendMail;
-use App\Rules\ConfirmPassword;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 
