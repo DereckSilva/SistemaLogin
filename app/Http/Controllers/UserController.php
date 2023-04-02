@@ -4,27 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
 
-    protected $repository;
+    public $repository;
 
     public function __construct(UserRepository $repository) {
         $this->repository = $repository;
     }
-    public function all(Request $request) {
 
-        $ola = '';
+    public function login(Request $request) {
 
-        return $this->repository->findAll();
-    }
+        $user = $request->all();
 
-    public function create(Request $request) {
-        $request;
+        if (!Auth::attempt(['email' => $user['email'], 'password' => $user['password']])) {
 
-        $oi = '';
+            $error = 'Email ou senha incorreto';
 
-        return $this->repository->create($request);
+            return Response([ "message" => $error ], 500)
+                    ->header('Content-type', 'application/json');
+        }
+
+        return Response([ "messsage"=> 'Login Efetuado' ], 200)
+                ->header('Content-type', 'application/json');
     }
 }
