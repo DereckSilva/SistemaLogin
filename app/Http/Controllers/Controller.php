@@ -36,9 +36,11 @@ class Controller extends BaseController
             //$this->repository->create($user);
 
             DB::commit();
+            
             return Response(['message' => 'Usuário Criado com Sucesso'], 201)
                 ->header('Content-type', 'application/json');
         }catch (HttpResponseException $error){
+            
             DB::rollBack();
 
             return Response(['message' => $error->getMessage()], 500)

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    public $repository;
+    protected $repository;
 
     public function __construct(UserRepository $repository) {
         $this->repository = $repository;
@@ -23,11 +23,11 @@ class UserController extends Controller
 
             $error = 'Email ou senha incorreto';
 
-            return Response([ "message" => $error ], 500)
+            return Response([ "message" => $error ], 400)
                     ->header('Content-type', 'application/json');
         }
 
-        return Response([ "messsage"=> 'Login Efetuado' ], 200)
+        return Response([ "messsage" => 'Login Efetuado' ], 200)
                 ->header('Content-type', 'application/json');
     }
 }
