@@ -42,6 +42,7 @@ class Controller extends BaseController
             return Response(['message' => 'Usuário Criado com Sucessosss'], 201)
                 ->header('Content-type', 'application/json');
         }catch (HttpResponseException $error){
+            
             DB::rollBack();
 
             return Response(['message' => $error->getMessage()], 500)
