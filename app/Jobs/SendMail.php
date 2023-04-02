@@ -23,12 +23,10 @@ class SendMail implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct($name, $email, $forgetPassword = false, $cod = null)
+    public function __construct($name, $email)
     {
         $this->name           = $name;
         $this->email          = $email;
-        $this->forgetPassword = $forgetPassword;
-        $this->cod            = $cod;
     }
 
     /**
@@ -36,7 +34,7 @@ class SendMail implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->email)->send(new SendMails($this->name, $this->forgetPassword, $this->cod));
+        Mail::to($this->email)->send(new SendMails($this->name));
     }
 
     public function failed(Throwable $exception): void

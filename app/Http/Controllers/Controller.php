@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendMail;
+use App\Pipelines\SendEmailPipeline;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pipeline\Pipeline;
+
 
 
 class Controller extends BaseController
@@ -20,8 +24,6 @@ class Controller extends BaseController
 
     public function create(Request $request) {
 
-        DB::beginTransaction();
-
         try {
             $user = $request->all();
 
@@ -29,14 +31,15 @@ class Controller extends BaseController
 
             if (!empty($users)) {
 
-                return Response(['message' => 'Nenhum usuário foi encontrado'], 400)
+                return Response(['message' => 'Esse email já está cadastrado'], 400)
                     ->header('Content-type', 'application/json');
             }
 
             //$this->repository->create($user);
 
-            DB::commit();
-            return Response(['message' => 'Usuário Criado com Sucesso'], 201)
+            $this->index($user);
+
+            return Response(['message' => 'Usuário Criado com Sucessosss'], 201)
                 ->header('Content-type', 'application/json');
         }catch (HttpResponseException $error){
             DB::rollBack();
@@ -44,5 +47,12 @@ class Controller extends BaseController
             return Response(['message' => $error->getMessage()], 500)
                 ->header('Content-type', 'application/json');
         }
+    }
+
+    public function index($user) {
+        app(Pipeline::class)
+                ->send($user)
+                ->through(SendEmailPipeline::class)
+                ->thenReturn();
     }
 }

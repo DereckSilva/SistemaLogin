@@ -27,7 +27,7 @@ class UserController extends Controller
                     ->header('Content-type', 'application/json');
         }
 
-        return Response([ "messsage"=> 'Login Efetuado' ], 200)
+        return Response([ "messsage" => 'Login Efetuado'], 200)
                 ->header('Content-type', 'application/json');
     }
 }

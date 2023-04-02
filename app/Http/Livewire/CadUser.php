@@ -30,7 +30,7 @@ class CadUser extends Component
 
         $userRepository = app('App\Repositories\UserRepository');
 
-        $user = $userRepository->insertNewUser($this->name, $this->email, $this->password);
+        $user = $userRepository->create(['email'=>'cdddd', 'name'=> 'c', 'password'=>'ddd']);
 
         if (empty($user->error)) {
             SendMail::dispatch($this->name, $this->email)->onQueue('cadUser');

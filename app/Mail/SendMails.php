@@ -20,11 +20,10 @@ class SendMails extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($name, $forgetPassword = false, $cod = null)
+    public function __construct($name)
     {
         $this->name           = $name;
-        $this->forgetPassword = $forgetPassword;
-        $this->cod            = $cod;
+
     }
 
     /**
@@ -34,7 +33,7 @@ class SendMails extends Mailable
     {
         return new Envelope(
             from: new Address(config('mail.from.address')),
-            subject: $this->forgetPassword ? 'Recuperação de Senha' : 'Bem Vindo',
+            subject: 'Bem Vindo',
         );
     }
 
@@ -44,8 +43,8 @@ class SendMails extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: $this->forgetPassword ? 'email.forget' : 'email.email',
-            with: ['name' => $this->name, 'cod' => $this->cod ]
+            view: 'email.email',
+            with: ['name' => $this->name]
         );
     }
 
