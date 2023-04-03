@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendMail;
 use App\Pipelines\SendEmailPipeline;
+use App\Pipelines\TestePipeline;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -42,7 +43,7 @@ class Controller extends BaseController
             return Response(['message' => 'Usuário Criado com Sucessosss'], 201)
                 ->header('Content-type', 'application/json');
         }catch (HttpResponseException $error){
-            
+
             DB::rollBack();
 
             return Response(['message' => $error->getMessage()], 500)
@@ -53,7 +54,10 @@ class Controller extends BaseController
     public function index($user) {
         app(Pipeline::class)
                 ->send($user)
-                ->through(SendEmailPipeline::class)
+                ->through([
+                    TestePipeline::class,
+                    SendEmailPipeline::class,
+                ])
                 ->thenReturn();
     }
 }
