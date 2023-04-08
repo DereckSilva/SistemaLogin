@@ -40,7 +40,7 @@ class Controller extends BaseController
 
             $this->index($user);
 
-            return Response(['message' => 'Usuário Criado com Sucessosss'], 201)
+            return Response(['message' => 'Usuário Criado com Sucesso'], 201)
                 ->header('Content-type', 'application/json');
         }catch (HttpResponseException $error){
 
