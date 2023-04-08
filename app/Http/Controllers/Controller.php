@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendMail;
 use App\Pipelines\SendEmailPipeline;
 use App\Pipelines\TestePipeline;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

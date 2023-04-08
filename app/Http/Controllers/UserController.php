@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Events\Coment;
 use App\Repositories\UserRepository;
-use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,9 +33,8 @@ class UserController extends Controller
     }
 
     public function comment(Request $request) {
-        $request;
 
-        //Coment::dispatch($request->comment);
+        Coment::dispatch($request->comment);
 
         return response()
                 ->json(['message' => 'comentário feito com sucesso']);
