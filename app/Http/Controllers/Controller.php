@@ -35,9 +35,7 @@ class Controller extends BaseController
                     ->header('Content-type', 'application/json');
             }
 
-            //$this->repository->create($user);
-
-            $this->index($user);
+            $this->repository->create($user);
 
             return Response(['message' => 'Usuário Criado com Sucesso'], 201)
                 ->header('Content-type', 'application/json');
@@ -48,15 +46,5 @@ class Controller extends BaseController
             return Response(['message' => $error->getMessage()], 500)
                 ->header('Content-type', 'application/json');
         }
-    }
-
-    public function index($user) {
-        app(Pipeline::class)
-                ->send($user)
-                ->through([
-                    TestePipeline::class,
-                    SendEmailPipeline::class,
-                ])
-                ->thenReturn();
     }
 }
