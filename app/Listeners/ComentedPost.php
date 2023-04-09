@@ -20,8 +20,10 @@ class ComentedPost
     /**
      * Handle the event.
      */
-    public function handle(Coment $event): void
+    public function handle(Coment $event): array
     {
-        Storage::put('exemplse.txt', $event->comment());
+
+        return ['data'=> 123345];
+
     }
 }

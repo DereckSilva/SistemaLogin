@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\Coment;
+use App\Events\TesteRetorno;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,10 +36,9 @@ class UserController extends Controller
 
     public function comment(Request $request) {
 
-        Coment::dispatch($request->comment);
+        event(new Coment(User::find(83)));
 
         return response()
-                ->json(['message' => 'comentário feito com sucesso']);
-
+            ->json(['message' => 'comentário feito com sucesso']);
     }
 }
