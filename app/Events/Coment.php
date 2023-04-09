@@ -15,22 +15,31 @@ class Coment implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $coment;
-
     /**
      * Create a new event instance.
      */
-    public function __construct(User $coment)
+    public function __construct(
+        public User $user
+    )
+    {}
+
+    /**
+     * Formatando os dados de envio para o canal de mensagens
+     *
+     * @return array[]
+     */
+    public function broadcastWith(): array {
+        return ['user' => [
+            'id' => $this->user->id
+        ]];
+    }
+
+    /**
+     * The name of the queue on which to place the broadcasting job.
+     */
+    public function broadcastQueue(): string
     {
-        $this->coment = $coment;
-    }
-
-    public function broadcastWith() {
-        return ['user' => $this->coment];
-    }
-
-    public function comment() {
-        return $this->coment;
+        return 'redis';
     }
 
     /**
