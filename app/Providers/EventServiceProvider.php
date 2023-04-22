@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\Coment;
 use App\Events\TesteRetorno;
 use App\Listeners\ComentedPost;
+use App\Listeners\ComentList;
 use App\Listeners\TesteEventoResp;
 use App\Models\User;
 use App\Observers\UserObserver;
@@ -28,10 +29,6 @@ class EventServiceProvider extends ServiceProvider
         Coment::class => [
             ComentedPost::class
         ],
-
-        TesteRetorno::class => [
-            TesteEventoResp::class
-        ]
 
     ];
 

@@ -1,7 +1,8 @@
 const express = require('express')
 const app     = express()
 const Redis   = require('ioredis')
-const redis   = new Redis
+const sub   = new Redis
+const pub   = new Redis
 const server  = require('http').createServer(app)
 
 const io = require('socket.io')(server, {
@@ -15,11 +16,12 @@ const io = require('socket.io')(server, {
 // socket => está relacionado com um único usuário dentro de uma conexão
 
 io.on('connection', (socket) => {
-    console.log('connected')
+    console.log('cliente conectado')
 
-    redis.subscribe('laravel_database_testessssssss', () => {})
+    sub.subscribe('laravel_database_testessssssss', () => {
+    })
 
-    redis.on('message', (channel, message) => {
+    sub.on('message', (channel, message) => {
         socket.emit('client', JSON.parse(message))
     })
 
