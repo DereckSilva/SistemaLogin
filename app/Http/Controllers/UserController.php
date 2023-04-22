@@ -36,7 +36,7 @@ class UserController extends Controller
 
     public function comment(Request $request) {
 
-        event(new Coment(User::find(83)));
+        event(new Coment($request->comment));
 
         return response()
             ->json(['message' => 'comentário feito com sucesso']);
