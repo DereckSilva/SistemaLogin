@@ -4,20 +4,26 @@ const Redis   = require('ioredis')
 const redis   = new Redis
 const server  = require('http').createServer(app)
 
-const socket = require('socket.io')(server, {
+const io = require('socket.io')(server, {
     cors: { origin: '*' }
 })
 
-socket.on('connection', (io) => {
+// emit => emitir um evento
+// on => escutar um evento
+
+// io => está relacionado com todos os usuários em uma determinada conexão
+// socket => está relacionado com um único usuário dentro de uma conexão
+
+io.on('connection', (socket) => {
     console.log('connected')
-    console.log(io.id)
+
     redis.subscribe('laravel_database_testessssssss', () => {})
 
     redis.on('message', (channel, message) => {
-        io.emit('client', JSON.parse(message))
+        socket.emit('client', JSON.parse(message))
     })
 
-    io.on('disconect', (sock) => {
+    socket.on('disconect', (socket) => {
         console.log('disconected')
     })
 })
