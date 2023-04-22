@@ -5,6 +5,8 @@ const sub   = new Redis
 const pub   = new Redis
 const server  = require('http').createServer(app)
 
+const MAX_USERS_PER_ROOM = 2;
+
 const io = require('socket.io')(server, {
     cors: { origin: '*' }
 })
@@ -15,9 +17,25 @@ const io = require('socket.io')(server, {
 // io => está relacionado com todos os usuários em uma determinada conexão
 // socket => está relacionado com um único usuário dentro de uma conexão
 
-io.on('connection', (socket) => {
-    console.log('cliente conectado')
+//setando o máximo de ouvintes por 
+io.setMaxListeners(2)
 
+// middleware para o meu canal
+io.of('/teste').use((socket, next) => {
+    if (socket.server.eio._eventsCount > 2) {
+        socket.server.eio._eventsCount--
+        //podemos emitir um alert sobre a sala estar cheia
+    } else {
+        console.log(socket.server.eio._eventsCount++)
+        next()
+    }
+})
+
+// canal dedicado para um chat socket específico
+io.of('/teste').on('connection', (socket) => {
+    console.log('cliente conectado ' + socket.id)
+
+    // dessa forma aqui manda apenas para dois canais, quem envia a mensagem não recebe nada
     sub.subscribe('laravel_database_testessssssss', () => {
     })
 
@@ -25,9 +43,10 @@ io.on('connection', (socket) => {
         socket.emit('client', JSON.parse(message))
     })
 
-    socket.on('disconect', (socket) => {
-        console.log('disconected')
+    socket.on('disconnect', (socket) => {
+        console.log('cliente desconectado ' + socket.id)
     })
+    
 })
 
 server.listen(3000, () => {
