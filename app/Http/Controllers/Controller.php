@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRequest;
 use App\Pipelines\SendEmailPipeline;
 use App\Pipelines\TestePipeline;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pipeline\Pipeline;
@@ -22,9 +22,13 @@ class Controller extends BaseController
         return $this->repository->findAll();
     }
 
-    public function create(Request $request) {
+    public function create(CreateRequest $request) {
 
         try {
+            $validated = $request->validated();
+
+            return Response(['message' => 'Usuário Criado com Sucesso'], 201)
+                ->header('Content-type', 'application/json');
             $user = $request->all();
 
             $users = $this->repository->findEmail($user['email']);
