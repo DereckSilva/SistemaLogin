@@ -31,6 +31,12 @@ io.of('/teste').use((socket, next) => {
     }
 })
 
+// criar estrutura de lista de espera dentro de um chat (como se fosse uma parte do suporte em tempo real)
+    // -> estrutura de chat para vendedor e comprador
+
+// criar estrutura para comentários dentro de um determinado post
+    // -> estrutura de comentários em post dos vendedores
+
 // canal dedicado para um chat socket específico
 io.of('/teste').on('connection', (socket) => {
     console.log('cliente conectado ' + socket.id)
