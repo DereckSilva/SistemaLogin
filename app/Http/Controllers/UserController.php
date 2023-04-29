@@ -12,8 +12,18 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+    /**
+     * Acesso ao repositório da classe
+     *
+     * @var $repository
+     */
     protected $repository;
 
+    /**
+     * Inicializa o repositório da classe no momento da instancia da classe
+     *
+     * @param UserRepository $repository
+     */
     public function __construct(UserRepository $repository) {
         $this->repository = $repository;
     }

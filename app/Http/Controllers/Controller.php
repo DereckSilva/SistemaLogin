@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateRequest;
-use App\Pipelines\SendEmailPipeline;
-use App\Pipelines\TestePipeline;
+use App\Http\Requests\CadUser\CadUserForApiRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pipeline\Pipeline;
-
 
 
 class Controller extends BaseController
@@ -22,13 +18,10 @@ class Controller extends BaseController
         return $this->repository->findAll();
     }
 
-    public function create(CreateRequest $request) {
+    public function create(CadUserForApiRequest $request) {
 
         try {
-            $validated = $request->validated();
 
-            return Response(['message' => 'Usuário Criado com Sucesso'], 201)
-                ->header('Content-type', 'application/json');
             $user = $request->all();
 
             $users = $this->repository->findEmail($user['email']);
@@ -43,7 +36,7 @@ class Controller extends BaseController
 
             return Response(['message' => 'Usuário Criado com Sucesso'], 201)
                 ->header('Content-type', 'application/json');
-        }catch (HttpResponseException $error){
+        } catch (HttpResponseException $error){
 
             DB::rollBack();
 

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /**
+     * Realiza a autentica
+     *
      * @return string | route
      */
     public function authenticate(array $user) {
