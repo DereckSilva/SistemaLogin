@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests\CadUser;
 
+use App\Http\Util\Trait\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CadUserForApiRequest extends FormRequest
 {
+
+    use ApiResponse;
+
     /**
      * Determina se o usuário está autorizado a realizar requisições
      */
@@ -36,13 +40,9 @@ class CadUserForApiRequest extends FormRequest
      * @author Dereck Silva
      * @since 29/04/2023
      * @param Validator $validator
-     * @return void
+     * @return HttpResponseException
      */
-    public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Erro na validação',
-            'data' => $validator->errors()
-        ], 400));
+    public function failedValidation(Validator $validator): HttpResponseException {
+        return $this->httpException('Erro na validação', $validator->errors(), 400);
     }
 }

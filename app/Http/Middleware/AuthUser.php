@@ -2,24 +2,28 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Util\Trait\ApiResponse;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthUser
 {
+
+    use ApiResponse;
+
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Request $request
+     * @param Closure $next
+     * @return JsonResponse
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): JsonResponse
     {
         $user = Auth::user();
 
         if (empty($user)) {
-            return response()->json(['message' => 'Usuário não autenticado'], 400);
+            return $this->error('Usuário não autenticado', [], 401);
         }
         return $next($request);
     }

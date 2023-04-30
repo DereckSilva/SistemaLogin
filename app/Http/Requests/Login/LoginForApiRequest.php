@@ -38,10 +38,6 @@ class LoginForApiRequest extends FormRequest
      */
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Erro na validacao',
-            'data'    => $validator->errors()
-        ], 404));
+        return $this->httpException('Erro na validação', $validator->errors(), 400);
     }
 }

@@ -25,8 +25,8 @@ class SendMail implements ShouldQueue
      */
     public function __construct($name, $email)
     {
-        $this->name           = $name;
-        $this->email          = $email;
+        $this->name  = $name;
+        $this->email = $email;
     }
 
     /**
@@ -37,6 +37,12 @@ class SendMail implements ShouldQueue
         Mail::to($this->email)->send(new SendMails($this->name));
     }
 
+    /**
+     * Em caso de falha do job executa aqui
+     *
+     * @param Throwable $exception
+     * @return void
+     */
     public function failed(Throwable $exception): void
     {
         // codificar depois

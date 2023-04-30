@@ -6,19 +6,36 @@ use App\Http\Requests\CadUser\CadUserForApiRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use App\Http\Util\Trait\ApiResponse;
 
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, ValidatesRequests;
+    use AuthorizesRequests, ValidatesRequests, ApiResponse;
 
+    /**
+     * Função para retorno de todos os usuários
+     *
+     * @author Dereck Silva
+     * @since 30/04/2023
+     * @return mixed
+     */
     public function all() {
         return $this->repository->findAll();
     }
 
-    public function create(CadUserForApiRequest $request) {
+    /**
+     * Cria um novo usuário
+     *
+     * @author Dereck Silva
+     * @since 30/04/2023
+     * @param CadUserForApiRequest $request
+     * @return Response
+     */
+    public function create(CadUserForApiRequest $request): JsonResponse {
 
         try {
 
@@ -28,20 +45,17 @@ class Controller extends BaseController
 
             if (!empty($users)) {
 
-                return Response(['message' => 'Esse email já está cadastrado'], 400)
-                    ->header('Content-type', 'application/json');
+                return $this->error('E-mail já cadastrado', [], 400);
             }
 
             $this->repository->create($user);
 
-            return Response(['message' => 'Usuário Criado com Sucesso'], 201)
-                ->header('Content-type', 'application/json');
+            return $this->success('Usuário cadastrado com sucesso', $user, 201);
         } catch (HttpResponseException $error){
 
             DB::rollBack();
 
-            return Response(['message' => $error->getMessage()], 500)
-                ->header('Content-type', 'application/json');
+            return $this->error($error->getMessage(), [], 500);
         }
     }
 }
