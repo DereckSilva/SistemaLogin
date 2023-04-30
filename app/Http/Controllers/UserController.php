@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Events\Coment;
 use App\Events\TesteRetorno;
-use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,18 +29,15 @@ class UserController extends Controller
 
     public function login(Request $request) {
 
-        $user = $request->all();
+        $token = Auth::user()->createToken('tokenDereck')->plainTextToken;
 
-        if (!Auth::attempt(['email' => $user['email'], 'password' => $user['password']])) {
-
-            $error = 'Email ou senha incorreto';
-
-            return Response([ "message" => $error ], 400)
-                    ->header('Content-type', 'application/json');
-        }
-
-        return Response([ "messsage" => 'Login Efetuado' ], 200)
-                ->header('Content-type', 'application/json');
+        return response()->json([
+            'success' => true,
+            'message' => 'Login Efetuado com sucesso',
+            'data'    => [
+                'token' => $token
+            ]
+        ], 200);
     }
 
     public function comment(Request $request) {

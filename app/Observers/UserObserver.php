@@ -31,7 +31,8 @@ class UserObserver
      */
     public function deleted(User $user): void
     {
-        //
+        // excluí tokens quando o usuário é deletado da base
+        $user->tokens()->delete();
     }
 
     /**

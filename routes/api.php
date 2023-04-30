@@ -19,11 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware([ 'request', 'auth' ])->group(function () {
+Route::middleware([ 'request', 'authLogin' ])->group(function () {
     Route::post('/login', [UserController::class, 'login']);
 });
 
-Route::middleware([ 'authUser', 'request' ])->group(function () {
+Route::middleware([ 'auth:sanctum' ])->group(function () {
     Route::get('/users', [UserController::class, 'all']);
     Route::post('/comment', [UserController::class, 'comment']);
 });
