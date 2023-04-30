@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\Coment;
+use App\Events\DeleteToken;
 use App\Events\TesteRetorno;
 use App\Listeners\ComentedPost;
 use App\Listeners\ComentList;
@@ -29,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         Coment::class => [
             ComentedPost::class
         ],
+        DeleteToken::class => [
+            \App\Listeners\DeleteToken::class
+        ]
 
     ];
 

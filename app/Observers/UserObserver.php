@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\DeleteToken;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
@@ -31,8 +32,8 @@ class UserObserver
      */
     public function deleted(User $user): void
     {
-        // excluí tokens quando o usuário é deletado da base
-        $user->tokens()->delete();
+        /* excluí tokens quando o usuário é deletado da base */
+       event(new DeleteToken($user));
     }
 
     /**
