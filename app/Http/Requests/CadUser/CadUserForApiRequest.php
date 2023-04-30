@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\CadUser;
 
-use App\Http\Util\Trait\ApiResponse;
+use App\Util\Trait\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;

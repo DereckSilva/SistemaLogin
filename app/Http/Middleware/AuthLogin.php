@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Util\Trait\ApiResponse;
-use App\Http\Util\Trait\requestMiddleware;
+use App\Util\Trait\ApiResponse;
+use App\Util\Trait\requestMiddleware;
 use Closure;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;

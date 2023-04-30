@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Events\Coment;
 use App\Events\TesteRetorno;
-use App\Http\Util\Trait\ApiResponse;
 use App\Repositories\UserRepository;
+use App\Util\Trait\ApiResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use \Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {

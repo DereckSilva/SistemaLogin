@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Util\Trait;
+namespace App\Util\Trait;
 
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
@@ -43,6 +43,16 @@ trait ApiResponse {
         ], $statusCode);
     }
 
+    /**
+     * Retorno de exception com base na requisição
+     *
+     * @author Dereck Silva
+     * @since 30/04/2023
+     * @param string $message
+     * @param array $data
+     * @param int $statusCode
+     * @return HttpResponseException
+     */
     public function httpException(string $message, array $data, int $statusCode): HttpResponseException {
         throw new HttpResponseException(response()->json([
             'success' => false,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Util\Trait;
+namespace App\Util\Trait;
 
 trait requestMiddleware
 {
