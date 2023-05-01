@@ -48,7 +48,8 @@ class Controller extends BaseController
                 return $this->error('E-mail já cadastrado', [], 400);
             }
 
-            $this->repository->create($user);
+            $user['password'] = bcrypt($user['password']);
+            $user = $this->repository->create($user)->toArray();
 
             return $this->success('Usuário cadastrado com sucesso', $user, 201);
         } catch (HttpResponseException $error){
