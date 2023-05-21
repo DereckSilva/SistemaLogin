@@ -1,20 +1,15 @@
 <?php
 
-namespace App\Http\Requests\CadUser;
+namespace App\Http\Requests;
 
-use App\Util\Trait\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rules\Password;
 
-class CadUserForApiRequest extends FormRequest
+class ForgetPassword extends FormRequest
 {
-
-    use ApiResponse;
-
     /**
-     * Determina se o usuário está autorizado a realizar requisições
+     * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
@@ -25,15 +20,13 @@ class CadUserForApiRequest extends FormRequest
      * Retorna a validação para cada campo
      *
      * @author Dereck Silva
-     * @since 29/04/2023
+     * @since 21/05/2023
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
     public function rules(): array
     {
         return [
-            'name'     => [ 'required', 'min:5' ],
-            'email'    => [ 'required' ],
-            'password' => [ 'required', Password::min(8)->letters()->numbers(), 'confirmed'],
+            'email' => [ 'required', 'email' ]
         ];
     }
 
@@ -41,7 +34,7 @@ class CadUserForApiRequest extends FormRequest
      * Retorna o erro com base especificado nas rulex's
      *
      * @author Dereck Silva
-     * @since 29/04/2023
+     * @since 21/05/2023
      * @param Validator $validator
      * @return HttpResponseException
      */

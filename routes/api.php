@@ -28,5 +28,8 @@ Route::middleware([ 'auth:sanctum' ])->group(function () {
     Route::post('/comment', [UserController::class, 'comment']);
 });
 Route::middleware('request')->group(function () {
-});
     Route::post('/cadUser', [UserController::class, 'create']);
+    Route::get('/forgetPassword', [UserController::class, 'forgetPassword']);
+});
+    Route::post('/confirmCode', [UserController::class, 'confirmCode']);
+    Route::post('/newPassword', [UserController::class, 'newPassword']);

@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Events\DeleteToken;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Storage;
 
 class UserObserver
 {

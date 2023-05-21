@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-
 use App\Util\Trait\ApiResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Collection;

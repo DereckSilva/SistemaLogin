@@ -9,7 +9,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 class LoginForApiRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determina se a request pode ser acessada pelo usuário
      */
     public function authorize(): bool
     {
@@ -17,8 +17,10 @@ class LoginForApiRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Retorna a validação para cada campo
      *
+     * @author Dereck Silva
+     * @since 29/04/2023
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
     public function rules(): array

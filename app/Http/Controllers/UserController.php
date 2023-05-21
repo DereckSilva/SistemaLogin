@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Events\Coment;
 use App\Events\TesteRetorno;
+use App\Http\Requests\ForgetPassword;
+use App\Jobs\SendMail;
 use App\Repositories\UserRepository;
 use App\Util\Trait\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -48,6 +52,7 @@ class UserController extends Controller
     }
 
     /**
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -57,5 +62,36 @@ class UserController extends Controller
 
         return response()
             ->json(['message' => 'comentário feito com sucesso']);
+    }
+
+    public function forgetPassword(ForgetPassword $forgetPassword) {
+
+        /* Verifica se o e-mail está cadastrado no sistema */
+        $email = $this->repository->findEmail($forgetPassword->email);
+
+        /* Caso não encontre o e-mail, uma exception é retornada ao usuário */
+        if (empty($email)) {
+            $this->httpException('Este e-mail não está cadastrado', [], 404);
+        }
+
+        /* Gera o código para o usuário setar uma nova senha */
+        $code = rand(10000, 99999);
+        Cache::set('codePassword', $code, 60);
+
+        /* Envia o e-mail para o usuário */
+        SendMail::dispatchSync('dereck', $email->email, true, $code);
+
+        return $this->success('Email enviado com sucesso', [], 200);
+    }
+
+    public function confirmCode() {
+
+        /* Recupera o código gerado */
+        $rememberCode = Cache::get('codePassword');
+
+        /* Caso o código expire, gera um erro na tela */
+        if (empty($rememberCode)) {
+            $this->httpException('O código expirou, tente novamente!', [], 500);
+        }
     }
 }

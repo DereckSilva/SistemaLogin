@@ -1,4 +1,4 @@
 <div>
     <p>Teste</p>
-    <p>{{$cod}}</p>
+    <p>{{$code}}</p>
 </div>

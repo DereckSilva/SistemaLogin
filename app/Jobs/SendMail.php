@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\ForgetPassword;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -15,18 +16,20 @@ class SendMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $name;
-    public $email;
-    public $forgetPassword;
-    public $cod;
+    protected $name;
+    protected $email;
+    protected $forgetPassword;
+    protected $code;
 
     /**
-     * Create a new job instance.
+     * Cria uma instancia da automação para envio de email
      */
-    public function __construct($name, $email)
+    public function __construct($name, $email, $forgetPassword = false, $code = null)
     {
-        $this->name  = $name;
-        $this->email = $email;
+        $this->name           = $name;
+        $this->email          = $email;
+        $this->forgetPassword = $forgetPassword;
+        $this->code           = $code;
     }
 
     /**
@@ -34,7 +37,11 @@ class SendMail implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->email)->send(new SendMails($this->name));
+        if ($this->forgetPassword) {
+            Mail::to($this->email)->send(new ForgetPassword($this->email, $this->code));
+        } else {
+            Mail::to($this->email)->send(new SendMails($this->name));
+        }
     }
 
     /**
