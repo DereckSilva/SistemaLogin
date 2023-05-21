@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\User;
 use App\Util\Trait\ApiResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Collection;
@@ -24,9 +25,9 @@ class Base {
      * @author Dereck Silva
      * @since 30/0/2023
      * @param array $input
-     * @return Collection|HttpResponseException
+     * @return User|Collection|HttpResponseException
      */
-    public function create(array $input): Collection|HttpResponseException {
+    public function create(array $input): User|Collection|HttpResponseException {
 
         DB::beginTransaction();
 

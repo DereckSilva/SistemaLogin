@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests;
 
+use App\Util\Trait\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ForgetPassword extends FormRequest
 {
+
+    use ApiResponse;
+
     /**
      * Determine if the user is authorized to make this request.
      */

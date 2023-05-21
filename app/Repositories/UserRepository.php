@@ -42,4 +42,13 @@ class UserRepository extends Base {
 
         return $users;
     }
+
+    public function resetPassword(User $user, $newPassword): User {
+
+        $user->fill([
+            'password' => $newPassword
+        ])->save();
+
+        return $user;
+    }
 }
