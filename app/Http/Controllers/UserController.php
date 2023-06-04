@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\Coment;
 use App\Events\TesteRetorno;
 use App\Http\Requests\ForgetPassword;
+use App\Http\Requests\ResetPassword;
 use App\Jobs\SendMail;
 use App\Repositories\UserRepository;
 use App\Util\Trait\ApiResponse;
@@ -83,20 +84,18 @@ class UserController extends Controller
         return $this->success('Email enviado com sucesso', [ 'user' => $user ], 200);
     }
 
-    public function confirmCode() {
+    /**
+     * Reseta a senha do usuário
+     *
+     * @author Dereck Silva
+     * @since 04/06/2023
+     * @param ResetPassword $resetPassword
+     * @return JsonResponse;
+     */
+    public function resetPassword(ResetPassword $resetPassword) {
 
-        /* Recupera o código gerado */
-        $rememberCode = Cache::get('codePassword');
+        $this->repository->resetPassword($resetPassword->email, $resetPassword->password);
 
-        /* Caso o código expire, gera um erro na tela */
-        if (empty($rememberCode)) {
-            $this->httpException('O código expirou, tente novamente!', [], 500);
-        }
-
-        $this->success('Código correto', [], 200);
-    }
-
-    public function resetPassword() {
-        $this->repository->resetPassword();
+        return $this->success('Senha alterada com sucesso', [], 200);
     }
 }

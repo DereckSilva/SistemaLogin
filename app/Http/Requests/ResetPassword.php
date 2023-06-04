@@ -31,6 +31,8 @@ class ResetPassword extends FormRequest
     public function rules(): array
     {
         return [
+            /* salvar email no front e depois passar como parametro na requisicao */
+            'email'       => [ 'required', 'email' ],
             'newPassword' => [ 'required', Password::min(8)->letters()->numbers(), 'confirmed' ]
         ];
     }

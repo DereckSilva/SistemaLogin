@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository extends Base {
 
@@ -45,10 +47,20 @@ class UserRepository extends Base {
 
     public function resetPassword(User $user, $newPassword): User {
 
-        $user->fill([
-            'password' => $newPassword
-        ])->save();
+        DB::beginTransaction();
 
+        try {
+            $user->fill([
+                'password' => bcrypt($newPassword)
+            ])->save();
+
+        } catch (HttpResponseException $e) {
+            DB::rollBack();
+
+            $this->httpException($e->getMessage(), [], 404);
+        }
+
+        DB::commit();
         return $user;
     }
 }
