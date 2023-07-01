@@ -27,7 +27,7 @@ class AuthLogin
         $requestName =  Str::title(explode('/', $request->getRequestUri())[2]);
         $this->resolveRules($requestName);
 
-        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password], true)) {
+        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->rememberToken)) {
             return $this->httpException('E-mail ou senha incorreto', [], 404);
         }
 

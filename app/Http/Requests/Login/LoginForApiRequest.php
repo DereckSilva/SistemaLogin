@@ -2,12 +2,17 @@
 
 namespace App\Http\Requests\Login;
 
+use App\Util\Trait\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\Password;
 
 class LoginForApiRequest extends FormRequest
 {
+
+    use ApiResponse;
+
     /**
      * Determina se a request pode ser acessada pelo usuário
      */
@@ -26,7 +31,9 @@ class LoginForApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => [ 'required' ],
+            'email'    => [ 'required' ],
+            'password' => ['required', Password::min(8)->letters(2)->numbers() ],
+            'rememberToken' => [ 'required', 'boolean' ]
         ];
     }
 
@@ -36,10 +43,10 @@ class LoginForApiRequest extends FormRequest
      * @author Dereck Silva
      * @since 29/04/2023
      * @param Validator $validator
-     * @return void
+     * @return HttpResponseException
      */
     public function failedValidation(Validator $validator)
     {
-        return $this->httpException('Erro na validação', $validator->errors(), 400);
+        return $this->httpException('Erro na validação',  [ $validator->errors() ], 400);
     }
 }

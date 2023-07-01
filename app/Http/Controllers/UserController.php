@@ -42,13 +42,15 @@ class UserController extends Controller
      * @since 30/04/2023
      * @return JsonResponse
      */
-    public function login(): JsonResponse  {
+    public function login(Request $request): JsonResponse  {
 
         $token = Auth::user()->createToken('tokenDereck')->plainTextToken;
+        $rememberToken = $this->repository->findEmail($request->email)->remember_token;
 
         return $this->success('Login Efetuado com sucesso', [
-            'data' => $token
-        ], 201);
+            'token'    => $token,
+            'remember' => $rememberToken
+        ], 200);
     }
 
     /**
