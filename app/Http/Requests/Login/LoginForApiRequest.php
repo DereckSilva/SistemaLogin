@@ -31,8 +31,8 @@ class LoginForApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'    => [ 'required' ],
-            'password' => ['required', Password::min(8)->letters(2)->numbers() ],
+            'email'         => [ 'required' ],
+            'password'      => ['required', Password::min(8)->letters(2)->numbers() ],
             'rememberToken' => [ 'required', 'boolean' ]
         ];
     }

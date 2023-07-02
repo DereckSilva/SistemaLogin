@@ -32,10 +32,4 @@ Route::middleware('request')->group(function () {
     Route::post('/forgetPassword', [UserController::class, 'forgetPassword']);
 });
     Route::post('/newPassword', [UserController::class, 'newPassword']);
-    Route::post('/rememberMe', function (Request $request) {
-        return response()->json([
-            'success' => false,
-            'data'    => ['data'=>10],
-            'status'  => 200
-        ]);
-    });
+    Route::post('/rememberMe', [UserController::class, 'rememberMe']);

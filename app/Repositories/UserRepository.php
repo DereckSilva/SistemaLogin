@@ -63,4 +63,11 @@ class UserRepository extends Base {
         DB::commit();
         return $user;
     }
+
+
+    public function rememberMe(string $token) {
+        $user = User::where('remember_token', '=', $token)->first();
+
+        return !empty($user) ? $user : null;
+    }
 }

@@ -29,7 +29,7 @@ class UserController extends Controller
     /**
      * Inicializa o repositório da classe no momento da instancia da classe
      *
-     * @param UserRepository $repository
+     * @param UserRepository\ $repository
      */
     public function __construct(UserRepository $repository) {
         $this->repository = $repository;
@@ -99,5 +99,22 @@ class UserController extends Controller
         $this->repository->resetPassword($resetPassword->email, $resetPassword->password);
 
         return $this->success('Senha alterada com sucesso', [], 200);
+    }
+
+    public function rememberMe(Request $request) {
+        $token = $request->remember;
+
+        if (empty($token)) {
+            return $this->httpException('Nenhum token informado', [], 400);
+        }
+
+        $token = json_decode($token)->valor;
+        $tokenUser = $this->repository->rememberMe($token);
+
+        if (empty($tokenUser)) {
+            return $this->httpException('O token informado não consta na base de dados', [], 400);
+        }
+
+        return $this->success('Token encontrado com sucesso', ['user' => $tokenUser], 200);
     }
 }
